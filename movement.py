@@ -10,9 +10,7 @@ import RPi.GPIO as GPIO
 
 # import needed library
 import time
-import ultrasonicSensor
 import getLine
-import turning
 
 
 # set GPIO warnings as false
@@ -131,85 +129,17 @@ RightPwm = GPIO.PWM(MotorRight_PWM, 100)
 #  object to go forward without any limitation of running_time
 # =======================================================================
 
-
-def avoid():
-    stop()
-    time.sleep(0.5)
-    turning.rightPointTurn(75, 0.4)
-    stop()
-    time.sleep(0.5)
-    go_forward(70, 1)
-    stop()
-    time.sleep(0.5)
-    turning.leftPointTurn(75, 0.35)
-    stop()
-    time.sleep(0.5)
-    go_forward(70, 1)
-    stop()
-    time.sleep(0.5)
-    check = 0
-    for i in range(8):
-        line = getLine.get_line()
-        if line != ["1", "1", "1", "1", "1"]:
-            check = 1
-        print(check)
-        turning.leftPointTurn(60, 0.075)
-    stop()
-    time.sleep(0.5)
-    if check == 0:
-        while getLine.get_line() == ["1", "1", "1", "1", "1"]:
-            go_forward(60, 0.1)
-        stop()
-        time.sleep(0.5)
-    if getLine.get_line() != ["1", "1", "1", "1", "1"]:
-        while getLine.get_line() != ["1", "1", "1", "1", "1"]:
-            go_forward(70, 0.2)
-        stop()
-        time.sleep(0.5)
-    while getLine.get_line() == ["1", "1", "1", "1", "1"]:
-        turning.rightSwingTurn(70, 0.2)
-    stop()
-    time.sleep(0.5)
-
-
-dis = 10
-
-
 def go_forward_infinite(left_speed, right_speed, check_list):
-    # q = Queue.Queue()
-    # t = threading.Thread(target=ultrasonicSensor.measureDistance, name="SensorThread", args=[q], )
     left_motor_direction(left_forward)
     GPIO.output(MotorLeft_PWM, GPIO.HIGH)
     right_motor_direction(right_forward)
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
-    # to avoid collision between go_forward_any method and turn method, insert a infinite loop
-    # t.start()
     while 1:
         check = getLine.get_line()
         if check != check_list:
             break
         LeftPwm.ChangeDutyCycle(left_speed)
         RightPwm.ChangeDutyCycle(right_speed)
-        distance = ultrasonicSensor.measureDistance()
-        if dis >= distance >= 5:
-            avoid()
-            break
-    # t.join()
-
-
-# =======================================================================
-#  go_backward_infinite method has been generated for the three-wheeled moving
-#  object to go backward without any limitation of running_time
-# =======================================================================
-def go_backward_infinite(speed):
-    left_motor_direction(left_backward)
-    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
-    right_motor_direction(right_backward)
-    GPIO.output(MotorRight_PWM, GPIO.HIGH)
-    # reason is as same as go_forward_any loop
-    while 1:
-        LeftPwm.ChangeDutyCycle(speed)
-        RightPwm.ChangeDutyCycle(speed)
 
 
 # =======================================================================
@@ -221,21 +151,6 @@ def go_forward(speed, running_time):
     left_motor_direction(left_forward)
     GPIO.output(MotorLeft_PWM, GPIO.HIGH)
     right_motor_direction(right_forward)
-    GPIO.output(MotorRight_PWM, GPIO.HIGH)
-    LeftPwm.ChangeDutyCycle(speed)
-    RightPwm.ChangeDutyCycle(speed)
-    time.sleep(running_time)
-
-
-# =======================================================================
-#  go_backward method has been generated for the three-wheeled moving
-#  object to go backward with the limitation of running_time
-# =======================================================================
-
-def go_backward(speed, running_time):
-    left_motor_direction(left_backward)
-    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
-    right_motor_direction(right_backward)
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     LeftPwm.ChangeDutyCycle(speed)
     RightPwm.ChangeDutyCycle(speed)
