@@ -1,8 +1,8 @@
 ######################################################################
-### Date: 2017/11/8
+### Date: 2017/11/27
 ### file name: movement.py
 ### Purpose: This code has been generated for define
-###          going forward and backward.
+###          swing turn and point turn.
 ######################################################################
 
 # import GPIO library
@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 # import needed library
 import time
 import getLine
-
+import maze_solve
 
 # set GPIO warnings as false
 GPIO.setwarnings(False)
@@ -136,39 +136,135 @@ def go_forward_infinite(left_speed, right_speed, check_list):
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     while 1:
         check = getLine.get_line()
+        print(check)
         if check != check_list:
+            check = getLine.get_line()
+            if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
+                print(1)
+                go_forward(55, 50, 0.4)
+                if getLine.get_line() == ['1', '1', '1', '1', '1']:
+                    print(2)
+                    stop()
+                    time.sleep(0.5)
+                    maze_solve.flag = "left"
+                else:
+                    pass
+            elif check == ['1', '0', '0', '0', '1']:
+                time.sleep(0.1)
+                check = getLine.get_line()
+                if check[4] == '0':
+                    maze_solve.flag = "right"
+                else:
+                    go_forward(50, 48, 0.4)
+                    stop()
+                    time.sleep(0.5)
+                    maze_solve.flag = "left"
+            elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
+                maze_solve.flag = "right"
+            elif check == ['1', '1', '1', '1', '1']:
+                go_forward(50, 48, 0.3)
+                stop()
+                time.sleep(0.5)
+                if getLine.get_line() == ['1', '1', '1', '1', '1']:
+                    maze_solve.flag = "u_turn"
             break
         LeftPwm.ChangeDutyCycle(left_speed)
         RightPwm.ChangeDutyCycle(right_speed)
 
 
-# =======================================================================
-#  go_forward method has been generated for the three-wheeled moving
-#  object to go forward with the limitation of running_time
-# =======================================================================
-
-def go_forward(speed, running_time):
+def go_forward(left_speed, right_speed, t):
     left_motor_direction(left_forward)
     GPIO.output(MotorLeft_PWM, GPIO.HIGH)
     right_motor_direction(right_forward)
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
+    LeftPwm.ChangeDutyCycle(left_speed)
+    RightPwm.ChangeDutyCycle(right_speed)
+    time.sleep(t)
+
+
+# =======================================================================
+# perform right point turn
+# ======================================================================
+def rightPointTurn(speed, running_time):
+    left_motor_direction(left_forward)
+    right_motor_direction(right_backward)
+
+    # set the left and right motor pwm to be ready to movee
+    GPIO.output(MotorRight_PWM, GPIO.HIGH)
+    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
+
+    # set the speed of the left motor to go forward
     LeftPwm.ChangeDutyCycle(speed)
+    # set the speed of the right motor to go backward
     RightPwm.ChangeDutyCycle(speed)
+    # set the running time of the both motors to move
+    time.sleep(running_time)
+
+
+#=======================================================================
+# perform left point turn
+# ======================================================================
+def leftPointTurn(speed, running_time):
+    right_motor_direction(right_forward)
+    left_motor_direction(left_backward)
+
+    # set the left and right motor pwm to be ready to move
+    GPIO.output(MotorRight_PWM, GPIO.HIGH)
+    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
+
+    # set the speed of the left motor to go backward
+    LeftPwm.ChangeDutyCycle(speed)
+    # set the speed of the right motor to go forward
+    RightPwm.ChangeDutyCycle(speed)
+    # set the running time of the both motors to move
     time.sleep(running_time)
 
 
 # =======================================================================
-# define the stop module
+# perform right swing turn of 90 degree
 # =======================================================================
-def stop():
-    # the speed of left motor will be set as LOW
-    GPIO.output(MotorLeft_PWM, GPIO.LOW)
-    # the speed of right motor will be set as LOW
+def rightSwingTurn(speed, running_time):
+    # set the right motor pwm to be ready to stop
+    # Turn Off Right PWM
     GPIO.output(MotorRight_PWM, GPIO.LOW)
-    # left motor will be stopped with function of ChangeDutyCycle(0)
-    LeftPwm.ChangeDutyCycle(0)
-    # left motor will be stopped with function of ChangeDutyCycle(0)
+    # set the left motor to go forward
+    left_motor_direction(left_forward)
+
+    # set the left motor pwm to be ready to go forward
+    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
+
+    # set the right motor pwm to be ready to stop
+    # Turn Off Right PWM
+    GPIO.output(MotorRight_PWM, GPIO.LOW)
+    # set the speed of the left motor to go forward
+    LeftPwm.ChangeDutyCycle(speed)
+    # set the speed of the right motor to stop
     RightPwm.ChangeDutyCycle(0)
+    # set the running time of the left motor to go forward
+    time.sleep(running_time)
+
+
+# =======================================================================
+# perform left swing turn of 90 degree
+# =======================================================================
+def leftSwingTurn(speed, running_time):
+
+    # set the left motor pwm to be ready to stop
+    # Turn Off Left PWM
+    GPIO.output(MotorLeft_PWM,GPIO.LOW)
+
+    # set the right motor to go forward
+    right_motor_direction(right_forward)
+
+    # set the right motor pwm to be ready to go forward
+    GPIO.output(MotorRight_PWM, GPIO.HIGH)
+
+    # set the speed of the left motor to stop
+    LeftPwm.ChangeDutyCycle(0)
+    # set the speed of the right motor to go forward
+    RightPwm.ChangeDutyCycle(speed)
+    # set the running time of the right motor to go forward
+    time.sleep(running_time)
 
 
 # =======================================================================
@@ -190,13 +286,14 @@ def pwm_low():
     GPIO.cleanup()
 
 
-# =======================================================================
-# test code
-# =======================================================================
+#=======================================================================
+# stop the vehicle
+# ======================================================================
+def stop():
+    GPIO.output(MotorLeft_PWM, GPIO.LOW)
+    GPIO.output(MotorRight_PWM, GPIO.LOW)
+    LeftPwm.ChangeDutyCycle(0)
+    RightPwm.ChangeDutyCycle(0)
+
 if __name__ == "__main__":
-    try:
-        go_forward_infinite(60, 60, track.get_line())
-        go_backward_infinite(60)
-        stop()
-    except KeyboardInterrupt:
-        stop()
+    leftPointTurn(70, 1)

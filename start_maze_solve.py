@@ -4,7 +4,7 @@
 ### Purpose: this code has been generated for start linetracing.
 #########################################################################
 
-import tracingModule
+import maze_solve
 import movement
 import sys
 
@@ -16,7 +16,7 @@ GPIO.setwarnings(False)
 
 while True:
     try:
-        tracingModule.line_tracing()
+        maze_solve.maze_solve()
     except KeyboardInterrupt:
         movement.pwm_low()
         GPIO.cleanup()
