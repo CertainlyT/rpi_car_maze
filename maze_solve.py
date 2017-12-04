@@ -38,12 +38,10 @@ def maze_solve():
                 movement.rightPointTurn(35, 0.05)
             # more turn
             if getLine.get_line()[4] == '0':
-                print("more")
                 while getLine.get_line()[4] == '0':
                     movement.rightPointTurn(35, 0.05)
             # out
             if getLine.get_line()[0] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
-                print("out")
                 while getLine.get_line()[0] == '0':
                     movement.leftPointTurn(35, 0.05)
             movement.stop()
@@ -56,32 +54,25 @@ def maze_solve():
                 movement.leftPointTurn(35, 0.05)
             # more turn
             if getLine.get_line()[0] == '0':
-                print("more")
                 while getLine.get_line()[0] == '0':
                     movement.leftPointTurn(35, 0.05)
             # out
             if getLine.get_line()[4] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
-                print("out")
                 while getLine.get_line()[4] == '0':
                     movement.rightPointTurn(35, 0.05)
             movement.stop()
             time.sleep(0.5)
             flag = "front"
         elif flag == "u_turn":
-            print(u_count)
             if u_count == 0 or u_count == 1:
                 while getLine.get_line()[4] != '0':
                     movement.rightPointTurn(35, 0.05)
-                print("finished")
                 # more turn
                 if getLine.get_line()[4] == '0':
-                    print("more")
                     while getLine.get_line()[4] == '0':
-                        print("success")
                         movement.rightPointTurn(35, 0.05)
                 # out
                 if getLine.get_line()[0] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    print("out")
                     while getLine.get_line()[0] == '0':
                         movement.leftPointTurn(35, 0.05)
                 movement.stop()
@@ -91,16 +82,12 @@ def maze_solve():
             else:
                 while getLine.get_line()[0] != '0':
                     movement.leftPointTurn(35, 0.05)
-                print("finished")
                 # more turn
                 if getLine.get_line()[0] == '0':
-                    print("more")
                     while getLine.get_line()[0] == '0':
-                        print("success")
                         movement.leftPointTurn(35, 0.05)
                 # out
                 if getLine.get_line()[4] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    print("out")
                     while getLine.get_line()[4] == '0':
                         movement.rightPointTurn(35, 0.05)
                 movement.stop()

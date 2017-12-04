@@ -139,21 +139,19 @@ def go_forward_infinite(left_speed, right_speed, check_list):
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
-                print("front")
-                go_forward(50, 42, 0.55)
+                go_forward(55, 42, 0.55)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    print(2)
                     stop()
                     time.sleep(0.5)
                     maze_solve.flag = "left"
                 else:
                     pass
             elif check == ['1', '0', '0', '0', '1']:
-                print("10001")
                 left = False
                 right = False
+
                 for i in range(5):
-                    go_forward(57, 47, 0.085)
+                    go_forward(54, 43, 0.085)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
                         left = True
@@ -173,22 +171,16 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     maze_solve.flag = "front"
 
             elif check == ['0', '0', '0', '0', '1']:
-                print("00001")
-                go_forward(50, 42, 0.55)
+                go_forward(55, 42, 0.55)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    print(2)
                     stop()
                     time.sleep(0.5)
-                    print("11")
-                    print(check)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
-                go_forward(50, 42, 0.55)
-                print("00000")
+                go_forward(55, 42, 0.55)
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
-                print("11111")
-                go_forward(50, 42, 0.3)
+                go_forward(55, 42, 0.25)
                 stop()
                 time.sleep(0.5)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
@@ -247,53 +239,6 @@ def leftPointTurn(speed, running_time):
 
 
 # =======================================================================
-# perform right swing turn of 90 degree
-# =======================================================================
-def rightSwingTurn(speed, running_time):
-    # set the right motor pwm to be ready to stop
-    # Turn Off Right PWM
-    GPIO.output(MotorRight_PWM, GPIO.LOW)
-    # set the left motor to go forward
-    left_motor_direction(left_forward)
-
-    # set the left motor pwm to be ready to go forward
-    GPIO.output(MotorLeft_PWM, GPIO.HIGH)
-
-    # set the right motor pwm to be ready to stop
-    # Turn Off Right PWM
-    GPIO.output(MotorRight_PWM, GPIO.LOW)
-    # set the speed of the left motor to go forward
-    LeftPwm.ChangeDutyCycle(speed)
-    # set the speed of the right motor to stop
-    RightPwm.ChangeDutyCycle(0)
-    # set the running time of the left motor to go forward
-    time.sleep(running_time)
-
-
-# =======================================================================
-# perform left swing turn of 90 degree
-# =======================================================================
-def leftSwingTurn(speed, running_time):
-
-    # set the left motor pwm to be ready to stop
-    # Turn Off Left PWM
-    GPIO.output(MotorLeft_PWM,GPIO.LOW)
-
-    # set the right motor to go forward
-    right_motor_direction(right_forward)
-
-    # set the right motor pwm to be ready to go forward
-    GPIO.output(MotorRight_PWM, GPIO.HIGH)
-
-    # set the speed of the left motor to stop
-    LeftPwm.ChangeDutyCycle(0)
-    # set the speed of the right motor to go forward
-    RightPwm.ChangeDutyCycle(speed)
-    # set the running time of the right motor to go forward
-    time.sleep(running_time)
-
-
-# =======================================================================
 # setup and initialize the left motor and right motor
 # =======================================================================
 def pwm_setup():
@@ -320,6 +265,3 @@ def stop():
     GPIO.output(MotorRight_PWM, GPIO.LOW)
     LeftPwm.ChangeDutyCycle(0)
     RightPwm.ChangeDutyCycle(0)
-
-if __name__ == "__main__":
-    leftPointTurn(70, 1)
