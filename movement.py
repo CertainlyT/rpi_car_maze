@@ -140,7 +140,7 @@ def go_forward_infinite(left_speed, right_speed, check_list):
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
                 print("front")
-                go_forward(55, 50, 0.35)
+                go_forward(50, 42, 0.55)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     print(2)
                     stop()
@@ -153,7 +153,7 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                 left = False
                 right = False
                 for i in range(5):
-                    go_forward(57, 47, 0.075)
+                    go_forward(57, 47, 0.085)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
                         left = True
@@ -166,13 +166,15 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     maze_solve.flag = "right"
                 elif left and not right:
                     if getLine.get_line() == ['1', '1', '1', '1', '1']:
+                        stop()
+                        time.sleep(0.5)
                         maze_solve.flag = "left"
                 else:
                     maze_solve.flag = "front"
 
             elif check == ['0', '0', '0', '0', '1']:
                 print("00001")
-                go_forward(55, 50, 0.35)
+                go_forward(50, 42, 0.55)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     print(2)
                     stop()
@@ -181,11 +183,12 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     print(check)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
+                go_forward(50, 42, 0.55)
                 print("00000")
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
                 print("11111")
-                go_forward(50, 48, 0.3)
+                go_forward(50, 42, 0.3)
                 stop()
                 time.sleep(0.5)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
