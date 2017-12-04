@@ -136,7 +136,6 @@ def go_forward_infinite(left_speed, right_speed, check_list):
     GPIO.output(MotorRight_PWM, GPIO.HIGH)
     while 1:
         check = getLine.get_line()
-        print(check)
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
@@ -146,18 +145,24 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     print(2)
                     stop()
                     time.sleep(0.5)
+                    print("11")
+                    print(check)
                     maze_solve.flag = "left"
                 else:
                     pass
             elif check == ['1', '0', '0', '0', '1']:
-                time.sleep(0.1)
+                go_forward(55, 47, 0.1)
                 check = getLine.get_line()
                 if check[4] == '0':
                     maze_solve.flag = "right"
+                elif check[3] == '0' or check[2] == '0':
+                    maze_solve.flag = "front"
                 else:
-                    go_forward(50, 48, 0.4)
+                    go_forward(50, 48, 0.3)
                     stop()
                     time.sleep(0.5)
+                    print("111")
+                    print(check)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
                 maze_solve.flag = "right"

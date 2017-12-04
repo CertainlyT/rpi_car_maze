@@ -33,31 +33,55 @@ def maze_solve():
             movement.stop()
             time.sleep(0.5)
             while getLine.get_line() != ['1', '1', '1', '1', '1']:
-                movement.rightPointTurn(40, 0.05)
+                movement.rightPointTurn(35, 0.05)
             while getLine.get_line() != ['1', '1', '1', '1', '0']:
-                movement.rightPointTurn(40, 0.05)
+                movement.rightPointTurn(35, 0.05)
+            # more turn
             if getLine.get_line()[4] == '0':
-                movement.rightPointTurn(40, 0.15)
+                print("more")
+                while getLine.get_line()[4] == '0':
+                    movement.rightPointTurn(35, 0.05)
+            # out
+            if getLine.get_line()[0] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
+                print("out")
+                while getLine.get_line()[0] == '0':
+                    movement.leftPointTurn(35, 0.05)
             movement.stop()
             time.sleep(0.5)
             flag = "front"
         elif flag == "left":
             while getLine.get_line() != ['1', '1', '1', '1', '1']:
-                movement.leftPointTurn(50, 0.05)
+                movement.leftPointTurn(35, 0.05)
             while getLine.get_line() != ['0', '1', '1', '1', '1']:
-                movement.leftPointTurn(50, 0.05)
+                movement.leftPointTurn(35, 0.05)
+            # more turn
             if getLine.get_line()[0] == '0':
-                movement.leftPointTurn(40, 0.15)
+                print("more")
+                while getLine.get_line()[0] == '0':
+                    movement.leftPointTurn(35, 0.05)
+            # out
+            if getLine.get_line()[4] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
+                print("out")
+                while getLine.get_line()[4] == '0':
+                    movement.rightPointTurn(35, 0.05)
             movement.stop()
             time.sleep(0.5)
             flag = "front"
         elif flag == "u_turn":
-            movement.stop()
-            time.sleep(0.5)
-            while getLine.get_line() != ['1', '1', '1', '1', '0']:
-                movement.rightPointTurn(40, 0.05)
+            while getLine.get_line()[4] != '0':
+                movement.rightPointTurn(35, 0.05)
+            print("finished")
+            # more turn
             if getLine.get_line()[4] == '0':
-                movement.rightPointTurn(40, 0.15)
+                print("more")
+                while getLine.get_line()[4] == '0':
+                    print("success")
+                    movement.rightPointTurn(35, 0.05)
+            # out
+            if getLine.get_line()[0] == '0' or getLine.get_line() == ['1', '1', '1', '1', '1']:
+                print("out")
+                while getLine.get_line()[0] == '0':
+                    movement.leftPointTurn(35, 0.05)
             movement.stop()
             time.sleep(0.5)
             flag = "front"
