@@ -139,8 +139,40 @@ def go_forward_infinite(left_speed, right_speed, check_list):
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
-                print(1)
-                go_forward(55, 50, 0.4)
+                print("front")
+                go_forward(55, 50, 0.35)
+                if getLine.get_line() == ['1', '1', '1', '1', '1']:
+                    print(2)
+                    stop()
+                    time.sleep(0.5)
+                    maze_solve.flag = "left"
+                else:
+                    pass
+            elif check == ['1', '0', '0', '0', '1']:
+                print("10001")
+                left = False
+                right = False
+                for i in range(5):
+                    go_forward(57, 47, 0.075)
+                    tmp = getLine.get_line()
+                    if tmp[0] == '0':
+                        left = True
+                    if tmp[4] == '0':
+                        right = True
+
+                if left and right:
+                    maze_solve.flag = "right"
+                elif not left and right:
+                    maze_solve.flag = "right"
+                elif left and not right:
+                    if getLine.get_line() == ['1', '1', '1', '1', '1']:
+                        maze_solve.flag = "left"
+                else:
+                    maze_solve.flag = "front"
+
+            elif check == ['0', '0', '0', '0', '1']:
+                print("00001")
+                go_forward(55, 50, 0.35)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     print(2)
                     stop()
@@ -148,25 +180,11 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     print("11")
                     print(check)
                     maze_solve.flag = "left"
-                else:
-                    pass
-            elif check == ['1', '0', '0', '0', '1']:
-                go_forward(55, 47, 0.1)
-                check = getLine.get_line()
-                if check[4] == '0':
-                    maze_solve.flag = "right"
-                elif check[3] == '0' or check[2] == '0':
-                    maze_solve.flag = "front"
-                else:
-                    go_forward(50, 48, 0.3)
-                    stop()
-                    time.sleep(0.5)
-                    print("111")
-                    print(check)
-                    maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
+                print("00000")
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
+                print("11111")
                 go_forward(50, 48, 0.3)
                 stop()
                 time.sleep(0.5)
