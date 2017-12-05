@@ -21,7 +21,7 @@ GPIO.setmode(GPIO.BOARD)
 
 # =======================================================================
 # declare the pins of 12, 11, 35 in the Raspberry Pi
-# as the left motor control pins in order to control left motor
+# as th te left motor control pins in order to control left motor
 # left motor needs three pins to be controlled
 # =======================================================================
 MotorLeft_A = 12
@@ -139,7 +139,7 @@ def go_forward_infinite(left_speed, right_speed, check_list):
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
-                go_forward(55, 42, 0.4)
+                go_forward(55, 42, 0.45)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     stop()
                     time.sleep(0.5)
@@ -150,7 +150,7 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                 left = False
                 right = False
                 for i in range(8):
-                    go_forward(57, 40, 0.05)
+                    go_forward(57, 40, 0.055)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
                         left = True
@@ -170,16 +170,16 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     maze_solve.flag = "front"
 
             elif check == ['0', '0', '0', '0', '1']:
-                go_forward(55, 42, 0.4)
+                go_forward(55, 42, 0.45)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     stop()
                     time.sleep(0.5)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
-                go_forward(55, 42, 0.4)
+                go_forward(55, 42, 0.45)
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
-                go_forward(55, 42, 0.15)
+                go_forward(55, 42, 0.1)
                 stop()
                 time.sleep(0.5)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
