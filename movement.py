@@ -139,7 +139,7 @@ def go_forward_infinite(left_speed, right_speed, check_list):
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
-                go_forward(55, 42, 0.55)
+                go_forward(55, 42, 0.4)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     stop()
                     time.sleep(0.5)
@@ -149,9 +149,8 @@ def go_forward_infinite(left_speed, right_speed, check_list):
             elif check == ['1', '0', '0', '0', '1']:
                 left = False
                 right = False
-
-                for i in range(5):
-                    go_forward(54, 43, 0.085)
+                for i in range(8):
+                    go_forward(57, 40, 0.05)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
                         left = True
@@ -171,16 +170,16 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     maze_solve.flag = "front"
 
             elif check == ['0', '0', '0', '0', '1']:
-                go_forward(55, 42, 0.55)
+                go_forward(55, 42, 0.4)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     stop()
                     time.sleep(0.5)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
-                go_forward(55, 42, 0.55)
+                go_forward(55, 42, 0.4)
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
-                go_forward(55, 42, 0.25)
+                go_forward(55, 42, 0.15)
                 stop()
                 time.sleep(0.5)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
@@ -219,7 +218,7 @@ def rightPointTurn(speed, running_time):
     time.sleep(running_time)
 
 
-#=======================================================================
+# ======================================================================
 # perform left point turn
 # ======================================================================
 def leftPointTurn(speed, running_time):
@@ -257,7 +256,7 @@ def pwm_low():
     GPIO.cleanup()
 
 
-#=======================================================================
+# ======================================================================
 # stop the vehicle
 # ======================================================================
 def stop():

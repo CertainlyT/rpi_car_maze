@@ -6,7 +6,6 @@
 
 import maze_solve
 import movement
-import sys
 
 # import GPIO library
 import RPi.GPIO as GPIO
@@ -20,4 +19,4 @@ while True:
     except KeyboardInterrupt:
         movement.pwm_low()
         GPIO.cleanup()
-        sys.exit()
+        quit()

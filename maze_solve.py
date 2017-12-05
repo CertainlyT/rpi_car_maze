@@ -29,6 +29,9 @@ def maze_solve():
                 movement.go_forward_infinite(10, 95, line_check)
             elif line_check == ['1', '1', '0', '0', '0']:
                 movement.go_forward_infinite(95, 10, line_check)
+            elif line_check == ['1', '0', '0', '0', '1']:
+                movement.go_forward_infinite(70, 70, line_check)
+
         elif flag == "right":
             movement.stop()
             time.sleep(0.5)
@@ -47,6 +50,7 @@ def maze_solve():
             movement.stop()
             time.sleep(0.5)
             flag = "front"
+
         elif flag == "left":
             while getLine.get_line() != ['1', '1', '1', '1', '1']:
                 movement.leftPointTurn(35, 0.05)
@@ -63,6 +67,7 @@ def maze_solve():
             movement.stop()
             time.sleep(0.5)
             flag = "front"
+
         elif flag == "u_turn":
             if u_count == 0 or u_count == 1:
                 while getLine.get_line()[4] != '0':
