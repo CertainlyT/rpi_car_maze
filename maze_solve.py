@@ -12,17 +12,17 @@ def maze_solve():
         line_check = getLine.get_line()
         if flag == "front":
             if line_check == ['1', '0', '1', '1', '1']:
-                movement.go_forward_infinite(10, 70, line_check)
+                movement.go_forward_infinite(20, 70, line_check)
             elif line_check == ['1', '1', '0', '1', '1']:
                 movement.go_forward_infinite(70, 70, line_check)
             elif line_check == ['1', '1', '1', '0', '1']:
-                movement.go_forward_infinite(70, 10, line_check)
+                movement.go_forward_infinite(70, 20, line_check)
             elif line_check == ['0', '0', '1', '1', '1']:
                 movement.go_forward_infinite(15, 100, line_check)
             elif line_check == ['1', '0', '0', '1', '1']:
-                movement.go_forward_infinite(20, 80, line_check)
+                movement.go_forward_infinite(40, 80, line_check)
             elif line_check == ['1', '1', '0', '0', '1']:
-                movement.go_forward_infinite(80, 20, line_check)
+                movement.go_forward_infinite(80, 40, line_check)
             elif line_check == ['1', '1', '1', '0', '0']:
                 movement.go_forward_infinite(100, 15, line_check)
             elif line_check == ['0', '0', '0', '1', '1']:
