@@ -41,10 +41,10 @@ MotorRight_PWM = 37
 # set direction
 # =======================================================================
 
-left_forward = True
-left_backward = False
-right_forward = False
-right_backward = True
+left_forward = False
+left_backward = True
+right_forward = True
+right_backward = False
 
 
 # ===========================================================================
@@ -139,10 +139,8 @@ def go_forward_infinite(left_speed, right_speed, check_list):
         if check != check_list:
             check = getLine.get_line()
             if check[0] == '0' and (check[0] == '0' or check[1] == '0'):
-                go_forward(55, 42, 0.5)
+                go_forward(100, 90, 0.2)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    stop()
-                    time.sleep(0.5)
                     maze_solve.flag = "left"
                 else:
                     pass
@@ -150,38 +148,30 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                 left = False
                 right = False
                 for i in range(8):
-                    go_forward(57, 40, 0.05)
+                    go_forward(100, 90, 0.022)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
                         left = True
                     if tmp[4] == '0':
                         right = True
                 print(left, right)
-                if left and right:
-                    maze_solve.flag = "right"
-                elif not left and right:
+                if right:
                     maze_solve.flag = "right"
                 elif left and not right:
                     if getLine.get_line() == ['1', '1', '1', '1', '1']:
-                        stop()
-                        time.sleep(0.5)
                         maze_solve.flag = "left"
                 else:
                     maze_solve.flag = "front"
 
             elif check == ['0', '0', '0', '0', '1']:
-                go_forward(55, 42, 0.5)
+                go_forward(100, 90, 0.2)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
-                    stop()
-                    time.sleep(0.5)
                     maze_solve.flag = "left"
             elif check[4] == '0' or check == ['0', '0', '0', '0', '0']:
-                go_forward(55, 42, 0.5)
+                go_forward(100, 90, 0.2)
                 maze_solve.flag = "right"
             elif check == ['1', '1', '1', '1', '1']:
-                go_forward(55, 42, 0.1)
-                stop()
-                time.sleep(0.5)
+                go_forward(100, 90, 0.2)
                 if getLine.get_line() == ['1', '1', '1', '1', '1']:
                     maze_solve.flag = "u_turn"
             break
@@ -213,7 +203,7 @@ def rightPointTurn(speed, running_time):
     # set the speed of the left motor to go forward
     LeftPwm.ChangeDutyCycle(speed)
     # set the speed of the right motor to go backward
-    RightPwm.ChangeDutyCycle(speed)
+    RightPwm.ChangeDutyCycle(speed + 3)
     # set the running time of the both motors to move
     time.sleep(running_time)
 
@@ -232,7 +222,7 @@ def leftPointTurn(speed, running_time):
     # set the speed of the left motor to go backward
     LeftPwm.ChangeDutyCycle(speed)
     # set the speed of the right motor to go forward
-    RightPwm.ChangeDutyCycle(speed)
+    RightPwm.ChangeDutyCycle(speed + 3)
     # set the running time of the both motors to move
     time.sleep(running_time)
 

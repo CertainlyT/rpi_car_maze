@@ -5,6 +5,7 @@
 #########################################################################
 
 import maze_solve
+import time
 import movement
 
 # import GPIO library
@@ -15,8 +16,11 @@ GPIO.setwarnings(False)
 
 while True:
     try:
+        start = time.time()
         maze_solve.maze_solve()
     except KeyboardInterrupt:
+        end = time.time()
+        print(end - start)
         movement.pwm_low()
         GPIO.cleanup()
         quit()
