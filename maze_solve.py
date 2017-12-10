@@ -52,7 +52,7 @@ def maze_solve():
                 movement.go_forward_infinite(20, 100, line_check)
             elif line_check == ['1', '1', '1', '1', '0']:
                 movement.go_forward_infinite(100, 20, line_check)
-            # to avoid stop (especially when line status is ['1', '0', '0', '0', '1'])
+            # to avoid stop (especially when line_check is ['1', '0', '0', '0', '1'])
             else:
                 movement.go_forward_infinite(50, 50, line_check)
 
