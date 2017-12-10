@@ -1,9 +1,15 @@
-######################################################################
+"""
 # Date: 2017/11/27
-# file name: movement.py
-# Purpose: This code has been generated for define
-#          movement of vehicle and setup of GPIO.
-######################################################################
+# Author: Jung Jihyeon
+# File name: movement.py
+# Purpose: This code has been generated for define movement of vehicle and setup of GPIO.
+
+# Latest update: 2017/12/10
+# Change log:
+    Delete unneeded function.
+    Improve flag selecting algorithm.
+    Update docString.
+"""
 
 # import GPIO library
 import RPi.GPIO as GPIO

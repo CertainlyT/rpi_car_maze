@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
-######################################################################
+"""
 # Date: 2017/12/01
+# Author: Jung Jihyeon
 # file name: maze_solve.py
-# Purpose: This code has been generated for define movement of
-# vehicle. It contains pre-defined speed and direction.
-######################################################################
+# Purpose: This code has been generated for define movement of vehicle. It contains pre-defined speed and direction.
+
+# Latest update: 2017/12/10
+# Change log:
+    Faster speed
+    Update docString
+"""
 
 import getLine
 import time

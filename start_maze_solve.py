@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
-#########################################################################
+"""
 # Date: 2017/12/01
-# file name: start_maze_solve.py
+# Author: Jung Jihyeon
+# File name: start_maze_solve.py
 # Purpose: this code has been generated for start the main function.
-#########################################################################
 
+# Latest update: 2017/12/10
+# Change log:
+    Add time checking function
+    Update docString
+"""
 # import needed modules
 import sys
 import time

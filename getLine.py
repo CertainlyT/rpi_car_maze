@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-######################################################################
+"""
 # Date: 2017/11/27
-# file name: getLine.py
+# Author: Jung Jihyeon
+# File name: getLine.py
 # Purpose: This code has been generated for getting status of line.
-######################################################################
 
+# Latest update: 2017/12/10
+# Change log:
+    update docString
+"""
 # import GPIO library
 import RPi.GPIO as GPIO
 
