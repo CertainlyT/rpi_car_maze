@@ -64,6 +64,10 @@ right_backward = False
 # and LOW to HIGH or HIGH to LOW in MotorLeft_B
 # ===========================================================================
 def left_motor_direction(direction):
+    """
+    left_motor_direction: set direction of left motor
+    :param direction: boolean
+    """
     if direction:
         GPIO.output(MotorLeft_A, GPIO.HIGH)
         GPIO.output(MotorLeft_B, GPIO.LOW)
@@ -85,6 +89,10 @@ def left_motor_direction(direction):
 # and LOW to HIGH or HIGH to LOW in MotorRight_B
 # ===========================================================================
 def right_motor_direction(direction):
+    """
+    right_motor_direction: set direction of right motor
+    :param direction: boolean
+    """
     if direction:
         GPIO.output(MotorRight_A, GPIO.HIGH)
         GPIO.output(MotorRight_B, GPIO.LOW)
