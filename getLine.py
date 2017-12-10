@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+######################################################################
+# Date: 2017/11/27
+# file name: getLine.py
+# Purpose: This code has been generated for getting status of line.
+######################################################################
+
+# import GPIO library
 import RPi.GPIO as GPIO
 
 # =======================================================================
@@ -58,7 +66,6 @@ rightTwo = 32
 # since the 5-way tracking sensor data has been detected and
 # used as the input data, leftTwo, leftOne, center, rightOne, and rightTwo
 # should be clearly declared as input
-#
 # =======================================================================
 
 GPIO.setup(leftTwo, GPIO.IN)
@@ -69,6 +76,10 @@ GPIO.setup(rightTwo, GPIO.IN)
 
 
 def get_line():
+    """
+    This function returns status of black line.
+    Infrared sensor is used for sensing line.
+    """
     line_status = [str(GPIO.input(leftTwo)), str(GPIO.input(leftOne)), str(GPIO.input(center)),
                    str(GPIO.input(rightOne)), str(GPIO.input(rightTwo))]
     return line_status
