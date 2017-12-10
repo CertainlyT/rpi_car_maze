@@ -1,8 +1,8 @@
 ######################################################################
-### Date: 2017/11/27
-### file name: movement.py
-### Purpose: This code has been generated for define
-###          swing turn and point turn.
+# Date: 2017/11/27
+# file name: movement.py
+# Purpose: This code has been generated for define
+#          movement of vehicle and setup of GPIO.
 ######################################################################
 
 # import GPIO library
@@ -130,6 +130,13 @@ RightPwm = GPIO.PWM(MotorRight_PWM, 100)
 # =======================================================================
 
 def go_forward_infinite(left_speed, right_speed, check_list):
+    """
+    go_forward_infinite: This function moves vehicle to forward without time limit.
+    Additional, it defines flag. Flag is used for selecting turn.
+    :param left_speed: define speed of left motor
+    :param right_speed: define speed of right motor
+    :param check_list: line status from get_line function in getLine.py
+    """
     left_motor_direction(left_forward)
     GPIO.output(MotorLeft_PWM, GPIO.HIGH)
     right_motor_direction(right_forward)
@@ -144,10 +151,13 @@ def go_forward_infinite(left_speed, right_speed, check_list):
                     maze_solve.flag = "left"
                 else:
                     pass
+
             elif check == ['1', '0', '0', '0', '1']:
+                # using boolean to select direction
                 left = False
                 right = False
                 for i in range(8):
+                    # sensing multiple times
                     go_forward(100, 90, 0.022)
                     tmp = getLine.get_line()
                     if tmp[0] == '0':
@@ -180,6 +190,12 @@ def go_forward_infinite(left_speed, right_speed, check_list):
 
 
 def go_forward(left_speed, right_speed, t):
+    """
+    go_forward function: move vehicles to forward while given time.
+    :param left_speed: define speed of left motor.
+    :param right_speed: define speed of right motor.
+    :param t: define moving time.
+    """
     left_motor_direction(left_forward)
     GPIO.output(MotorLeft_PWM, GPIO.HIGH)
     right_motor_direction(right_forward)
@@ -193,6 +209,11 @@ def go_forward(left_speed, right_speed, t):
 # perform right point turn
 # ======================================================================
 def rightPointTurn(speed, running_time):
+    """
+    rightPointTurn function: turn vehicles to right(left motor's direction is opposite to right motor's)
+    :param speed: define speed.
+    :param running_time: define moving time.
+    """
     left_motor_direction(left_forward)
     right_motor_direction(right_backward)
 
@@ -203,7 +224,7 @@ def rightPointTurn(speed, running_time):
     # set the speed of the left motor to go forward
     LeftPwm.ChangeDutyCycle(speed)
     # set the speed of the right motor to go backward
-    RightPwm.ChangeDutyCycle(speed + 3)
+    RightPwm.ChangeDutyCycle(speed + 3)  # add 3 because right motor is slower than left motor.
     # set the running time of the both motors to move
     time.sleep(running_time)
 
@@ -212,6 +233,11 @@ def rightPointTurn(speed, running_time):
 # perform left point turn
 # ======================================================================
 def leftPointTurn(speed, running_time):
+    """
+    leftPointTurn function: turn vehicles to left(left motor's direction is opposite to right motor's)
+    :param speed: define speed.
+    :param running_time: define moving time.
+    """
     right_motor_direction(right_forward)
     left_motor_direction(left_backward)
 
@@ -222,7 +248,7 @@ def leftPointTurn(speed, running_time):
     # set the speed of the left motor to go backward
     LeftPwm.ChangeDutyCycle(speed)
     # set the speed of the right motor to go forward
-    RightPwm.ChangeDutyCycle(speed + 3)
+    RightPwm.ChangeDutyCycle(speed + 3)  # add 3 because right motor is slower than left motor.
     # set the running time of the both motors to move
     time.sleep(running_time)
 
@@ -231,6 +257,9 @@ def leftPointTurn(speed, running_time):
 # setup and initialize the left motor and right motor
 # =======================================================================
 def pwm_setup():
+    """
+    initial setup
+    """
     LeftPwm.start(0)
     RightPwm.start(0)
 
@@ -239,6 +268,9 @@ def pwm_setup():
 # stop the car and cleanup gpio
 # =======================================================================
 def pwm_low():
+    """
+    turn off motors, and cleanup GPIO
+    """
     GPIO.output(MotorLeft_PWM, GPIO.LOW)
     GPIO.output(MotorRight_PWM, GPIO.LOW)
     LeftPwm.ChangeDutyCycle(0)
@@ -250,6 +282,9 @@ def pwm_low():
 # stop the vehicle
 # ======================================================================
 def stop():
+    """
+    Just turn off motors
+    """
     GPIO.output(MotorLeft_PWM, GPIO.LOW)
     GPIO.output(MotorRight_PWM, GPIO.LOW)
     LeftPwm.ChangeDutyCycle(0)
