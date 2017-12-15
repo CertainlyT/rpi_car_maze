@@ -15,11 +15,10 @@ python start_maze_solve.py
 ```
 
 ### 시험 동영상
-``` 
+
 https://drive.google.com/open?id=1ZC8DdWfRnBOnOFffrQ53JPfp_bnoxxOE
-```
+
 
 ### 코드 개선 후 무한상상실에서 테스트하는 영상
-``` 
+
 https://drive.google.com/open?id=1uMFBS5xtzT4xlMGVDBakfLmJE_sX-jmL
-```
